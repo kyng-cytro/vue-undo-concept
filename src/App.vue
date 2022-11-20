@@ -16,7 +16,7 @@
           class="px-2 py-1.5 text-xs font-semibold text-gray-200 bg-gray-500 border border-gray-600 rounded-lg"
           >Z</kbd
         >
-        to undo &
+        to undo ,
         <kbd
           class="px-2 py-1.5 text-xs font-semibold text-gray-200 bg-gray-500 border border-gray-600 rounded-lg"
           >Ctrl</kbd
@@ -26,11 +26,29 @@
           class="px-2 py-1.5 text-xs font-semibold text-gray-200 bg-gray-500 border border-gray-600 rounded-lg"
           >Y</kbd
         >
-        to redo
+        to redo &
+        <kbd
+          class="px-2 py-1.5 text-xs font-semibold text-gray-200 bg-gray-500 border border-gray-600 rounded-lg"
+          >Ctrl</kbd
+        >
+        +
+        <kbd
+          class="px-2 py-1.5 text-xs font-semibold text-gray-200 bg-gray-500 border border-gray-600 rounded-lg"
+          >X</kbd
+        >
+        to clear
       </p>
     </div>
     <!-- Plotter -->
-    <div class="bg-slate-200 h-[70%] w-full"></div>
+    <div @click="addPoint" class="bg-slate-200 h-[70%] w-full relative">
+      <GlobalEvents @keyup.ctrl="undo_redo" />
+      <div
+        :style="{ top: `${point.y}px`, left: `${point.x}px` }"
+        class="w-4 h-4 rounded-full bg-slate-700 absolute"
+        v-for="(point, index) in points"
+        :key="index"
+      ></div>
+    </div>
     <!--Footer-->
     <div
       class="h-[15%] flex flex-col items-center justify-center bg-slate-500 w-full border-t-2 border-black sm:gap-3"
@@ -54,5 +72,38 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from "vue";
+import { GlobalEvents } from "vue-global-events";
+
+interface Point {
+  x: Number;
+  y: Number;
+}
+let points = ref<Array<Point>>([]);
+let deleted = ref<Array<Point>>([]);
+
+const addPoint = (e: MouseEvent) => {
+  const point = <Point>{
+    x: e.offsetX,
+    y: e.offsetY,
+  };
+  points.value.push(point);
+};
+
+const undo_redo = (e: KeyboardEvent) => {
+  if (e.key == "z") {
+    if (points.value.length > 0) {
+      deleted.value.push(points.value.pop() as Point);
+    }
+  } else if (e.key == "y") {
+    if (deleted.value.length > 0) {
+      points.value.push(deleted.value.pop() as Point);
+    }
+  } else if (e.key == "x") {
+    points.value = [];
+    deleted.value = [];
+  }
+};
+</script>
 <style scoped></style>
