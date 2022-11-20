@@ -6,7 +6,27 @@
     >
       <h1 class="text-xl font-semibold">Point Plotter</h1>
       <p class="text-slate-300">
-        Use Ctrl + Z to undo plot & Ctrl + Y to redo plot
+        Use
+        <kbd
+          class="px-2 py-1.5 text-xs font-semibold text-gray-200 bg-gray-500 border border-gray-600 rounded-lg"
+          >Ctrl</kbd
+        >
+        +
+        <kbd
+          class="px-2 py-1.5 text-xs font-semibold text-gray-200 bg-gray-500 border border-gray-600 rounded-lg"
+          >Z</kbd
+        >
+        to undo &
+        <kbd
+          class="px-2 py-1.5 text-xs font-semibold text-gray-200 bg-gray-500 border border-gray-600 rounded-lg"
+          >Ctrl</kbd
+        >
+        +
+        <kbd
+          class="px-2 py-1.5 text-xs font-semibold text-gray-200 bg-gray-500 border border-gray-600 rounded-lg"
+          >Y</kbd
+        >
+        to redo
       </p>
     </div>
     <!-- Plotter -->
