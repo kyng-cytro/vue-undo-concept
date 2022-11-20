@@ -43,6 +43,16 @@
     <div @click="addPoint" class="bg-slate-200 h-[70%] w-full relative">
       <GlobalEvents @keyup.ctrl="undo_redo" />
       <div
+        class="flex justify-center items-center h-full"
+        v-show="points.length < 1 && deleted.length < 1"
+      >
+        <p
+          class="text-slate-400 text-xl font-semibold transition-all duration-100"
+        >
+          Click this area to plot a point
+        </p>
+      </div>
+      <div
         :style="{ top: `${point.y}px`, left: `${point.x}px` }"
         class="w-4 h-4 rounded-full bg-slate-700 absolute"
         v-for="(point, index) in points"
